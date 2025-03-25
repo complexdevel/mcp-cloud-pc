@@ -6,7 +6,10 @@ MCP Server for managing Azure Cloud PCs using the Microsoft Graph API.
 TBD
 
 ## Tools
-TBD
+* `cloud_pc_list`
+   - List all Cloud PCs available to the current tenant
+   - Returns: List of Cloud PCs in JSON formated string
+
 
 ### Usage with Claude Desktop
 To use this with Claude Desktop, add the following to your `claude_desktop_config.json`:
@@ -21,7 +24,12 @@ To use this with Claude Desktop, add the following to your `claude_desktop_confi
         "--directory",
         "/ABSOLUTE/PATH/TO/PARENT/FOLDER/mcp-cloud-pc",
         "mcp-cloud-pc.py"
-      ]
+      ],
+      "env": {
+        "MSGRAPH_TENANT_ID": "<YOUR GRAPH API TENANT ID>",
+        "MSGRAPH_CLIENT_ID": "<YOUR GRAPH API CLIENT ID>",
+        "MSGRAPH_CLIENT_SECRET": "<YOUR GRAPH API CLIENT SECRET>"
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 [project]
 name = "mcp-cloud-pc"
 version = "0.1.0"
-description = "Add your description here"
+description = "Windows 365 Cloud PC Management MCP Server"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
