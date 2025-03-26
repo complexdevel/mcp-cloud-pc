@@ -9,6 +9,9 @@ TBD
 * `cloud_pc_list`
    - List all Cloud PCs available to the current tenant
    - Returns: List of Cloud PCs in JSON formated string
+* `cloud_pc_reboot`
+   - Reboot Cloud PCs with the given ID
+   - Args: Cloud PC ID
 
 
 ### Usage with Claude Desktop
