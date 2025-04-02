@@ -9,11 +9,12 @@ def get_cloud_pc_list():
 
     res = subprocess.run(
         ["curl",
+         f"https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs",
          "-H", "Authorization: Bearer " + token,
          "-H", "Content-Type: application/json",
          "-H", "Content-Length: 0",
          "-X", "GET",
-         "-v", "https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs"],
+         "-v"],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
     response = res.stdout
@@ -33,11 +34,12 @@ def reboot_cloud_pc(pc_id):
 
     res = subprocess.run(
         ["curl",
+         f"https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs/{pc_id}/reboot",
          "-H", "Authorization: Bearer " + token,
          "-H", "Content-Type: application/json",
          "-H", "Content-Length: 0",
          "-X", "POST",
-         "-v", f"https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs/{pc_id}/reboot"],
+         "-v"],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
     response = res.stdout
