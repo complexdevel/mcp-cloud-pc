@@ -3,7 +3,7 @@
 MCP Server for managing Azure Cloud PCs using the Microsoft Graph API.
 
 ### Features
-TBD
+The MCP server currently uses 'curl' to send Graph API requests, because Python msgraph-sdk documentation doesn't match the current sdk implementation.
 
 ## Tools
 * `cloud_pc_list`
@@ -12,6 +12,10 @@ TBD
 * `cloud_pc_reboot`
    - Reboot Cloud PCs with the given ID
    - Args: Cloud PC ID
+* `cloud_pc_rename`
+   - Set new display name for a Cloud PC with the given ID.
+   - Arg: Cloud PC ID
+   - Arg: New display name for the Cloud PC
 
 
 ### Usage with Claude Desktop
