@@ -148,3 +148,36 @@ def end_cloud_pc_grace_period(pc_id):
             err_code = response_json["error"]["code"]
             err_msg = response_json["error"]["message"]
             raise Exception(f"Failed to end grace period of Cloud PC (err code:{err_code}, err msg:{err_msg})")
+
+
+def get_cloud_pc_review_status(pc_id):
+    # Get review status of the Cloud PC with the given ID.
+    # TODO: retrieveReviewStatus GET request is available in Microsoft Graph beta only.
+    # Need to replace it with the stable GET request when it will be available.
+    token = msgraph_auth.msgraph_get_api_token()
+
+    res = subprocess.run(
+        ["curl",
+         f"https://graph.microsoft.com/beta/deviceManagement/virtualEndpoint/cloudPCs/{pc_id}/retrieveReviewStatus",
+         "-H", f"Authorization: Bearer {token}",
+         "-H", "Content-Type: application/json",
+         "-H", "Content-Length: 0",
+         "-X", "GET",
+         "-v"],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    )
+    response = res.stdout
+
+    if res.returncode != 0:
+        raise Exception(f"Failed to retrieve review status for the Cloud PC {pc_id} (err={res.returncode}): {response}")
+
+    response_json = json.loads(response)
+
+    if "error" in response_json:
+        err_code = response_json["error"]["code"]
+        err_msg = response_json["error"]["message"]
+        raise Exception(f"Failed to retrieve review status for the Cloud PC (err code:{err_code}, err msg:{err_msg})")
+
+    del response_json["@odata.context"] # Remove @odata.context from the response to make it more readable
+
+    return response_json  # Return review status in JSON format

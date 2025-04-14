@@ -60,6 +60,16 @@ async def cloud_pc_end_grace_period(pc_id: str) -> str:
     msw365_cloud_pc.end_cloud_pc_grace_period(pc_id)
     return f"Request to end Cloud PC '{pc_id}' grace period was submitted successfully."
 
+@mcp.tool()
+async def cloud_pc_get_review_status(pc_id: str) -> str:
+    """Get (retrieve) review status for the Cloud PC with particular ID
+
+    Args:
+        pc_id: Cloud PC ID
+     """
+    review_status = msw365_cloud_pc.get_cloud_pc_review_status(pc_id)
+    return json.dumps(review_status)
+
 if __name__ == "__main__":
     # Initialize and run the MCP server
     mcp.run(transport='stdio')
