@@ -1,8 +1,16 @@
 import json
 import msw365_cloud_pc
+import msgraph_auth
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("mcp-cloud-pc")
+
+@mcp.tool()
+async def cloud_pc_list_users() -> str:
+    """Get list of registered users including users of Cloud PCs
+    """
+    users = msgraph_auth.get_user_list()
+    return json.dumps(users)
 
 @mcp.tool()
 async def cloud_pc_list() -> str:

@@ -6,6 +6,9 @@ MCP Server for managing Azure Cloud PCs using the Microsoft Graph API.
 The MCP server currently uses 'curl' to send Graph API requests, because Python msgraph-sdk documentation doesn't match the current sdk implementation.
 
 ## Tools
+* `cloud_pc_list_users`
+   - List all registered users
+   - Returns: List of information about users in JSON formated string
 * `cloud_pc_list`
    - List all Cloud PCs available to the current tenant
    - Returns: List of Cloud PCs in JSON formated string
