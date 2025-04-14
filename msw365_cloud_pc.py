@@ -85,9 +85,10 @@ def rename_cloud_pc(pc_id, new_name):
     if res.returncode != 0:
         raise Exception(f"Failed to rename Cloud PC (err={res.returncode}): {response}")
 
-    response_json = json.loads(response)
+    if len(response) > 0:
+        response_json = json.loads(response)
 
-    if "error" in response_json:
-        err_code = response_json["error"]["code"]
-        err_msg = response_json["error"]["message"]
-        raise Exception(f"Failed to rename Cloud PC (err code:{err_code}, err msg:{err_msg})")
+        if "error" in response_json:
+            err_code = response_json["error"]["code"]
+            err_msg = response_json["error"]["message"]
+            raise Exception(f"Failed to rename Cloud PC (err code:{err_code}, err msg:{err_msg})")
