@@ -70,6 +70,20 @@ async def cloud_pc_get_review_status(pc_id: str) -> str:
     review_status = msw365_cloud_pc.get_cloud_pc_review_status(pc_id)
     return json.dumps(review_status)
 
+@mcp.tool()
+async def cloud_pc_reprovision(pc_id: str, user_account_type: str, os_version: str) -> str:
+    """Reprovision the Cloud PC with particular ID with the given user account type (standardUser, administrator)
+       and Windows operating system version (avalilable versions: windows10, windows11)
+
+    Args:
+        pc_id: Cloud PC ID
+        user_account_type: Windows user account type (avalilable types: standardUser, administrator)
+        os_version: Windows operating system version (avalilable versions: windows10, windows11)
+     """
+    msw365_cloud_pc.reprovision_cloud_pc_for_user(pc_id, user_account_type, os_version)
+    return f"Request to reprovision Cloud PC '{pc_id}' was submitted successfully."
+
+
 if __name__ == "__main__":
     # Initialize and run the MCP server
     mcp.run(transport='stdio')

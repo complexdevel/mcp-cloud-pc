@@ -181,3 +181,47 @@ def get_cloud_pc_review_status(pc_id):
     del response_json["@odata.context"] # Remove @odata.context from the response to make it more readable
 
     return response_json  # Return review status in JSON format
+
+
+def reprovision_cloud_pc_for_user(pc_id, user_type, os_version):
+    # Reprovision the Cloud PC with the given ID for the user with the given type and Windows operating system version.
+    # TODO: reprovision POST request is available in Microsoft Graph beta only.
+    # Need to replace it with the stable POST request when it will be available.
+    token = msgraph_auth.msgraph_get_api_token()
+
+    # Validate user account type, use standardUser as default if invalid
+    if user_type != "standardUser" and user_type != "administrator":
+        user_type = "standardUser"
+
+    # Validate Windows operating system version, use windows11 as default if invalid
+    if os_version != "windows10" and os_version != "windows11":
+        os_version = "windows11"
+
+    json_body = json.dumps({
+        "userAccountType": user_type,
+        "osVersion": os_version
+    })
+
+    res = subprocess.run(
+        ["curl",
+         f"https://graph.microsoft.com/beta/deviceManagement/virtualEndpoint/cloudPCs/{pc_id}/reprovision",
+         "-H", f"Authorization: Bearer {token}",
+         "-H", "Content-Type: application/json",
+         "-H", f"Content-Length: {len(json_body)}",
+         "-d", json_body,
+         "-X", "POST",
+         "-v"],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    )
+    response = res.stdout
+
+    if res.returncode != 0:
+        raise Exception(f"Failed to reprovision the Cloud PC {pc_id} (err={res.returncode}): {response}")
+
+    if len(response) > 0:
+        response_json = json.loads(response)
+
+        if "error" in response_json:
+            err_code = response_json["error"]["code"]
+            err_msg = response_json["error"]["message"]
+            raise Exception(f"Failed to reprovision the Cloud PC (err code:{err_code}, err msg:{err_msg})")

@@ -28,6 +28,11 @@ The MCP server currently uses 'curl' to send Graph API requests, because Python 
 * `cloud_pc_get_review_status`
    - Retrieve review status for the Cloud PC with particular ID.
    - Arg: Cloud PC ID
+* `cloud_pc_reprovision`
+   - Reprovision the Cloud PC with particular ID with Windows 10 or 11 OS, set up redeployed user type 
+   - Arg: Cloud PC ID
+   - Arg: Windows user account type (avalilable types: standardUser, administrator)
+   - Arg: Windows operating system version (avalilable versions: windows10, windows11)
 
 
 ### Usage with Claude Desktop
