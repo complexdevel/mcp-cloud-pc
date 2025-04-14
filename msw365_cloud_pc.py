@@ -10,7 +10,7 @@ def get_cloud_pc_list():
     res = subprocess.run(
         ["curl",
          f"https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs",
-         "-H", "Authorization: Bearer " + token,
+         "-H", f"Authorization: Bearer {token}",
          "-H", "Content-Type: application/json",
          "-H", "Content-Length: 0",
          "-X", "GET",
@@ -41,7 +41,7 @@ def reboot_cloud_pc(pc_id):
     res = subprocess.run(
         ["curl",
          f"https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs/{pc_id}/reboot",
-         "-H", "Authorization: Bearer " + token,
+         "-H", f"Authorization: Bearer {token}",
          "-H", "Content-Type: application/json",
          "-H", "Content-Length: 0",
          "-X", "POST",
@@ -51,14 +51,14 @@ def reboot_cloud_pc(pc_id):
     response = res.stdout
 
     if res.returncode != 0:
-        raise Exception(f"Failed to reboot Cloud PCs (err={res.returncode}): {response}")
+        raise Exception(f"Failed to reboot Cloud PC (err={res.returncode}): {response}")
 
     response_json = json.loads(response)
 
     if "error" in response_json:
         err_code = response_json["error"]["code"]
         err_msg = response_json["error"]["message"]
-        raise Exception(f"Failed to reboot Cloud PCs (err code:{err_code}, err msg:{err_msg})")
+        raise Exception(f"Failed to reboot Cloud PC (err code:{err_code}, err msg:{err_msg})")
 
 
 def rename_cloud_pc(pc_id, new_name):
@@ -72,7 +72,7 @@ def rename_cloud_pc(pc_id, new_name):
     res = subprocess.run(
         ["curl",
          f"https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs/{pc_id}/rename",
-         "-H", "Authorization: Bearer " + token,
+         "-H", f"Authorization: Bearer {token}",
          "-H", "Content-Type: application/json",
          "-H", f"Content-Length: {len(json_body)}",
          "-d", json_body,
@@ -83,11 +83,11 @@ def rename_cloud_pc(pc_id, new_name):
     response = res.stdout
 
     if res.returncode != 0:
-        raise Exception(f"Failed to rename Cloud PCs (err={res.returncode}): {response}")
+        raise Exception(f"Failed to rename Cloud PC (err={res.returncode}): {response}")
 
     response_json = json.loads(response)
 
     if "error" in response_json:
         err_code = response_json["error"]["code"]
         err_msg = response_json["error"]["message"]
-        raise Exception(f"Failed to rename Cloud PCs (err code:{err_code}, err msg:{err_msg})")
+        raise Exception(f"Failed to rename Cloud PC (err code:{err_code}, err msg:{err_msg})")
