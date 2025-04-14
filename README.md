@@ -19,6 +19,9 @@ The MCP server currently uses 'curl' to send Graph API requests, because Python 
    - Set new display name for a Cloud PC with the given ID.
    - Arg: Cloud PC ID
    - Arg: New display name for the Cloud PC
+* `cloud_pc_troubleshoot`
+   - Troubleshoot a Cloud PC with the given ID.
+   - Arg: Cloud PC ID
 
 
 ### Usage with Claude Desktop

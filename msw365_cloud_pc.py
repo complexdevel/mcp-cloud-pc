@@ -92,3 +92,31 @@ def rename_cloud_pc(pc_id, new_name):
             err_code = response_json["error"]["code"]
             err_msg = response_json["error"]["message"]
             raise Exception(f"Failed to rename Cloud PC (err code:{err_code}, err msg:{err_msg})")
+
+
+def troubleshoot_cloud_pc(pc_id):
+    # Troubleshoot Cloud PC with the give ID
+    token = msgraph_auth.msgraph_get_api_token()
+
+    res = subprocess.run(
+        ["curl",
+         f"https://graph.microsoft.com/v1.0/deviceManagement/virtualEndpoint/cloudPCs/{pc_id}/troubleshoot",
+         "-H", f"Authorization: Bearer {token}",
+         "-H", "Content-Type: application/json",
+         "-H", "Content-Length: 0",
+         "-X", "POST",
+         "-v"],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    )
+    response = res.stdout
+
+    if res.returncode != 0:
+        raise Exception(f"Failed to troubleshoot Cloud PC (err={res.returncode}): {response}")
+
+    if len(response) > 0:
+        response_json = json.loads(response)
+
+        if "error" in response_json:
+            err_code = response_json["error"]["code"]
+            err_msg = response_json["error"]["message"]
+            raise Exception(f"Failed to troubleshoot Cloud PC (err code:{err_code}, err msg:{err_msg})")
