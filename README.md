@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/complexdevel-mcp-cloud-pc-badge.png)](https://mseep.ai/app/complexdevel-mcp-cloud-pc)
+
 # Cloud PC Management MCP Server
 
 MCP Server for managing Azure Cloud PCs using the Microsoft Graph API.
